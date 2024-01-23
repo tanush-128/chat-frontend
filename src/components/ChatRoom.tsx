@@ -111,7 +111,7 @@ const chatRoom = useChatRoomsStore
                           data={data}
                           imageElement={
                             imageElements[message.userEmail] || (
-                              <div className="w-8 h-8 rounded-full overflow-hidden">
+                              <div className="w-12 h-12 rounded-md overflow-hidden">
                                 <img
                                   src={data?.user?.image!}
                                   alt=""
