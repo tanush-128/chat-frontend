@@ -31,7 +31,7 @@ export interface Store {
   id: string;
   name: string;
   online:Online[] ;
-
+  save : boolean;
   
   addTyping: (t: Typing[]) => void;
   deleteTyping: (t: Typing) => void;
@@ -42,6 +42,7 @@ export interface Store {
   setName: (name: string) => void;
   addOnlineUser: (online: Online[]) => void;
   setOffline: (offline: Online) => void;
+  setSave : (save : boolean) => void;
 
 }
 
@@ -63,6 +64,8 @@ export class ChatRoomModel {
       id: "",
       name: "",
       online: [],
+      save: true,
+      setSave : (save) => set({save}),
       addTyping: (t) => set((state) =>( {typing: [...state.typing ,...t] })),
       deleteTyping: (t) =>
         set((state) => ({

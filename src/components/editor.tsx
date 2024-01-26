@@ -3,7 +3,7 @@ import { useChatRoomsStore, useSocketStore } from "src/store";
 // import { socket } from "@/app/page";
 import "remixicon/fonts/remixicon.css";
 import { UploadImage } from "~/actions/actions";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useSession } from "next-auth/react";
 
@@ -21,6 +21,7 @@ export const SendMessage = ({
       chatRoomId: chatRoomId,
       userEmail: data?.user?.email,
       userName: data?.user?.name,
+      save : true
     };
       useSocketStore.getState().setTyping({
                 chatRoomId: useChatRoomsStore.getState().chatRooms[
@@ -32,6 +33,7 @@ export const SendMessage = ({
               });
     if (useChatRoomsStore.getState().currentChatRoomIndex !== 0) {
       if (socket) {
+        _msg.save = useChatRoomsStore.getState().chatRooms[useChatRoomsStore.getState().currentChatRoomIndex]?.useChatRoomStore.getState().save ?? true
         socket.emit("message", _msg);
            
       }
@@ -55,6 +57,12 @@ export function Editor({ sendMessage }: { sendMessage: Function }) {
     const editor = document.querySelector(".editor") as HTMLElement;
     editor?.addEventListener("", () => {});
   }
+  // document.getElementById("f")?.addEventListener("click", (e) => {
+  //   console.log(e.target);
+  //   if (e.target === document.getElementById("f")) {
+  //     setImagePicker(false);
+  //   }
+  // });
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length === 0) return;
@@ -232,8 +240,18 @@ export function Editor({ sendMessage }: { sendMessage: Function }) {
         </div>
       </div>
       {ImagePicker && files.length === 0 && (
-        <div className="absolute top-0 flex h-svh w-full items-center justify-center">
-          <div className="b rounded-2xl bg-white p-8 text-black  shadow-inner shadow-blue-500">
+        <div id="f" onClick={(e) => {
+          if (e.target === document.getElementById("image-picker")) {
+    
+            console.log("clicked");
+          }
+          else {
+            setImagePicker(false)
+            
+          }
+        } 
+        } className="absolute top-0 flex h-svh md:w-full items-center p-4 left-0 justify-center">
+          <div id="image-picker" className="b rounded-2xl  bg-white p-8 text-black  shadow-inner shadow-blue-500">
             <div {...getRootProps({ className: className })}>
               {files.length <= 5 ? (
                 <div>

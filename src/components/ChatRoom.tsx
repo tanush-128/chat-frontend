@@ -1,19 +1,10 @@
-import { Menu, Settings, Trash2, UserRoundPlus } from "lucide-react";
 import { ReactNode, Suspense, useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
 import { useChatRoomsStore, useSidebarStore } from "src/store";
-import { deleteChatRoom } from "~/actions/actions";
+import { NavBar } from "./NavBar";
 import { SendMessage } from "./editor";
 import MessageElement from "./message";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { NavBar } from "./NavBar";
+import Image from "next/image";
 
 export default function ChatRoom({ data,setOpenSideBar }: { data: any,setOpenSideBar:Function }): ReactNode {
   const i = useChatRoomsStore((state) => state.currentChatRoomIndex);
@@ -45,8 +36,8 @@ const chatRoom = useChatRoomsStore
 
     if (!acc[user.user.email]) acc[user.user.email] = []
     
-        acc[user.user.email].push ( <div className="w-12 h-12 rounded-md overflow-hidden">
-          <img src={user.user.image!} alt=""   width={100} height={100} />
+        acc[user.user.email].push ( <div className="min-w-12 w-12 h-12 rounded-md overflow-hidden">
+          <Image src={user.user.image!} alt="" width={100} height={100} />
         </div>)
         return acc
   }, {} as any);
@@ -82,7 +73,7 @@ const chatRoom = useChatRoomsStore
   }, [chatRoom]);
 
   return (
-    <div {...handlers} className="b relative  h-screen w-full">
+    <div {...handlers} className="b h-screen col-span-9">
       <div className=" box-border  flex h-full flex-col bg-bg_2 ">
         <div className="text-white">
           <div>
@@ -91,14 +82,14 @@ const chatRoom = useChatRoomsStore
           </div>
         </div>
         <div
-          className="flex h-full flex-col overflow-y-auto py-5"
+          className="flex h-full  flex-col overflow-y-auto py-5"
           id="messages_list"
           ref={messagesList}
         >
           <Suspense fallback={<div>Loading...</div>}>
             {chatRoom && Object.keys(messagesByDate).map((date) => {
               return (
-                <div className="b">
+                <div className="b w-full">
                   <div key={date}>
                     <div className=" b mx-auto max-w-fit -translate-y-1/2 rounded-full bg-bg_2 px-5 py-2 text-center text-sm text-white">
                       {date}

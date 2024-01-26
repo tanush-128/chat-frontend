@@ -1,7 +1,7 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GetChatRoomMessages } from "src/actions/actions";
 import { ChatRoomsList } from "src/components/channels";
 import { useChatRoomsStore, useSidebarStore, useSocketStore } from "src/store";
@@ -13,6 +13,8 @@ import { AddUserToChatRoom } from "~/components/addUserToChatRoom";
 import { Search } from "~/components/createChatRoom";
 import { handleNotificationSetup } from "~/utils/serviceWorker";
 import { socketHandler } from "~/utils/socket";
+
+
 
 
 const init = (data :any) => {
@@ -34,10 +36,14 @@ const init = (data :any) => {
      });
 };
 
+
 export default function Home() {
   const [openSideBar, setOpenSideBar] = useState<boolean>(true);
+  const [slidePercent, setSlidePercent
+   ] = useState<number>(0);
   const handlers = useSwipeable({
     onSwipedLeft: (eventData) => {
+      setSlidePercent(eventData.absX);
       setOpenSideBar(false);
     },
   ...{
@@ -49,7 +55,8 @@ export default function Home() {
   swipeDuration: Infinity,               // allowable duration of a swipe (ms). *See Notes*
   touchEventOptions: { passive: true },  // options for touch listeners (*See Details*)
 },
-});
+  });
+  
   const { data, status } = useSession();
   const { index, setIndex } = useSidebarStore();
   const sideBarComps = [
@@ -74,18 +81,18 @@ export default function Home() {
     };
   }, [data?.user?.email]);
   
- 
-  
+
+
 
   return (
-    <div>
-      <div className="relative flex w-full">
+    <div className="">
+      <div  className="relative grid grid-cols-12 w-svw ">
         <div
           {...handlers}
           className={
            openSideBar
-              ? "absolute z-10 h-full min-w-80 animate-in md:static md:h-auto"
-              : "hidden"
+              ? "fixed md:static h-full md:h-svh z-40 -translate-x-0 col-span-3   ease-in-out duration-300"
+              : "fixed md:static h-full md:h-svh z-40 -translate-x-full col-span-3 md:-translate-x-0 ease-in-out duration-300"
           }
           id="sidebar"
        
@@ -95,14 +102,6 @@ export default function Home() {
 
         <ChatRoom data={data} setOpenSideBar={setOpenSideBar} />
       </div>
-      <button
-        className="btn"
-        onClick={() =>
-          status === "authenticated" ? signOut() : redirect("/login")
-        }
-      >
-        {status === "authenticated" ? "Sign Out" : "Sign In"}
-      </button>
     </div>
   );
 }

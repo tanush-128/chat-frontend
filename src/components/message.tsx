@@ -19,12 +19,7 @@ export default function MessageElement({
 
   const deleteMessage = () => {
     // deleteMessage(message.id);
-    useChatRoomsStore
-      .getState()
-      .chatRooms[
-        useChatRoomsStore.getState().currentChatRoomIndex
-      ]?.useChatRoomStore.getState()
-      .deleteMessage(message.id);
+  
     useSocketStore.getState().deleteMessage(message);
   };
 
@@ -33,18 +28,18 @@ export default function MessageElement({
     <div className="group relative flex gap-2 p-1 py-2 hover:bg-message_bg">
       {imageElement}
     
-      <div className="">
+      <div className="max-w-full">
         <div className="flex items-baseline gap-4">
           <div className="text-lg font-bold">
             {message.userEmail === data?.user?.email ? "You" : message.userName}
           </div>
 
           <div className="text-sm text-gray-400">
-            {new Date(message.createdAt).toLocaleTimeString()}
+            {new Date(message.createdAt).toLocaleTimeString(Intl.DateTimeFormat().resolvedOptions().locale, { hour: '2-digit', minute: '2-digit' })}
           </div>
         </div>
         <div
-          className="text-lg"
+          className="text-lg   max-w-full break-words"
           id="content"
           dangerouslySetInnerHTML={{ __html: message.content }}
         ></div>

@@ -3,8 +3,8 @@ import { useChatRoomsStore, useSocketStore } from "src/store";
 import { io } from "socket.io-client";
 
 export const socketHandler = () => {
-  // const socket = io("http://localhost:3001");
-  const socket = io("https://chat-appbackend.azurewebsites.net");
+  const socket = io("http://localhost:3001");
+  // const socket = io("https://chat-appbackend.azurewebsites.net");
   socket.on("connect", () => {
     console.log("connected");
   });
@@ -17,6 +17,7 @@ export const socketHandler = () => {
     });
   });
   socket.on("deleteMessage", (message) => {
+    console.log("deleting ", message);
     useChatRoomsStore.getState().chatRooms.forEach((chatRoom) => {
       if (chatRoom.id === message.chatRoomId) {
         chatRoom.useChatRoomStore.getState().deleteMessage(message.id);

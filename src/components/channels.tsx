@@ -17,8 +17,10 @@ export const ChatRoomsList = ({}: {}) => {
       "flex gap-2 items-center text-lg text-zinc-400 px-2 hover:bg-gray-600/40 rounded-md mx-2",
   };
 
+
+
   return (
-    <div className="b h-full  bg-bg_1 ">
+    <div  className="b h-full  bg-bg_1 ">
       <div className="flex gap-2  bg-white px-1">
         <input
           className="w-full rounded-sm p-2"
