@@ -36,6 +36,9 @@ export const ChatRoomsList = ({}: {}) => {
           <Plus />
         </button>
       </div>
+      <div className="b p-2">Click
+      <span className="text-xl font-bold"> + </span> to create a new channel
+      </div>
       <div className="b p-2">Channels</div>
       {chatRooms?.map((chatRoom, index) => {
         return (

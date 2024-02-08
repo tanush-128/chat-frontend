@@ -2,7 +2,7 @@ import { ChatRoom, ChatRoomOnUser, Message, User } from "@prisma/client";
 import { stat } from "fs";
 import { StoreApi, UseBoundStore, create } from "zustand";
 
-interface ChatRoomOnUserWithUser extends ChatRoomOnUser {
+export interface ChatRoomOnUserWithUser extends ChatRoomOnUser {
   user: User;
 }
 

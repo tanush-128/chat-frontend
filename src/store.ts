@@ -67,7 +67,7 @@ interface socketStore {
   userOnline: () => void;
   sendUserInfo: (userEmail: string, userName: string) => void;
   setSocket: (socket: Socket) => void;
-  deleteMessage: (message: any) => void;
+  deleteMessage: (message: Message) => void;
   addChatRooms: (chatRoomIds: string[]) => void;
   setTyping: (typing: Typing) => void;
 }
@@ -123,7 +123,24 @@ export const useChatRoomsStore = create<ChatRoomsStore>((set) => ({
       createdAt: new Date(),
       messages: guideMessages,
       userIds: [] as string[],
-      users: [] as any,
+      users: [
+        {
+          chatRoomId: "1",
+          userId: "1",
+          id: "1",
+          user: {
+            chatRoomsIds: [],
+            email: "ag",
+            id: "1",
+            createdAt: new Date(),
+            name: "Tanush Agarwal",
+            image: "https://www.google.com",
+            emailVerified: new Date(),
+            subscriptions: [],
+            updatedAt: new Date(),
+          },
+        },
+      ],
     }),
   ],
   currentChatRoomIndex: 0,

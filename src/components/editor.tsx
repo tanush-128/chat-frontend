@@ -102,7 +102,7 @@ export function Editor({ sendMessage }: { sendMessage: Function }) {
   function onSend() {
     const editor = document.querySelector("#editor-content") as HTMLElement;
     console.log(editor?.innerHTML);
-    if (editor?.innerHTML !== "<br>" && editor?.innerHTML !== "") {
+    if (editor?.innerHTML !== "<br>" && editor?.innerHTML !== "" && editor?.innerHTML !== "<p class=\"text-gray-500\">type here......<br></p>") {
       const _msg = editor.innerHTML
         .replace(/<div>/g, "<br>")
         .replace(/<\/div>/g, "")
@@ -112,6 +112,7 @@ export function Editor({ sendMessage }: { sendMessage: Function }) {
       setImagePicker(false);
       setFiles([]);
     }
+    editor.innerHTML === "<p class=\"text-gray-500\">type here......<br></p>"
   }
   function typingTimeoutFunction() {
     setTimeout(() => {
@@ -178,6 +179,16 @@ export function Editor({ sendMessage }: { sendMessage: Function }) {
           contentEditable
           className=" overflow-y-auto border-none text-lg outline-none"
           id="editor-content"
+          
+          onFocus={() => {
+            const editor = document.querySelector(
+              "#editor-content",
+            ) as HTMLElement;
+            if (editor.innerHTML === "<p class=\"text-gray-500\">type here......<br></p>")
+            editor.innerHTML = "";
+          }
+          }
+
           // style={{ minHeight: "24px", maxHeight: "108px" }}
           onChange={(e) => {
            console.log(e);
@@ -229,7 +240,8 @@ export function Editor({ sendMessage }: { sendMessage: Function }) {
             }
           }}
         >
-          <p>
+          <p className="text-gray-500">
+            type here......
             <br />
           </p>
         </div>

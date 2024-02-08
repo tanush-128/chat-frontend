@@ -4,6 +4,8 @@ import { Trash2 } from "lucide-react";
 import Image from "next/image";
 import { ReactNode, useEffect, useState } from "react";
 import { useChatRoomsStore, useSocketStore } from "~/store";
+import { Message } from "@prisma/client";
+import { Session } from "next-auth";
 
 const style1 = "flex flex-col items-end";
 const style2 = "flex flex-col items-start";
@@ -12,8 +14,8 @@ export default function MessageElement({
   data,
   imageElement
 }: {
-  message: any;
-    data: any;
+    message: Message;
+    data: Session;
     imageElement: ReactNode;
 }) {
 

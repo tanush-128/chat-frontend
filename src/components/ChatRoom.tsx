@@ -1,6 +1,6 @@
 import { ReactNode, Suspense, useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
-import { useChatRoomsStore, useSidebarStore } from "src/store";
+import { useChatRoomsStore} from "src/store";
 import { NavBar } from "./NavBar";
 import { SendMessage } from "./editor";
 import MessageElement from "./message";
@@ -8,7 +8,6 @@ import Image from "next/image";
 
 export default function ChatRoom({ data,setOpenSideBar }: { data: any,setOpenSideBar:Function }): ReactNode {
   const i = useChatRoomsStore((state) => state.currentChatRoomIndex);
-  const {setIndex,index} = useSidebarStore()
   const handlers = useSwipeable({
     onSwipedRight: (eventData) => {
      setOpenSideBar(true)
@@ -26,7 +25,7 @@ export default function ChatRoom({ data,setOpenSideBar }: { data: any,setOpenSid
 const chatRoom = useChatRoomsStore
     .getState()
     .chatRooms[i]?.useChatRoomStore((state) => state);
-// const chatRoom = useChatRoomsStore((state) => state.chatRooms[i])?.useChatRoomStore((state) => state);
+
 
   const messagesList = useRef<HTMLDivElement>(null);
   const messages = chatRoom?.messages;
@@ -36,20 +35,18 @@ const chatRoom = useChatRoomsStore
 
     if (!acc[user.user.email]) acc[user.user.email] = []
     
-        acc[user.user.email].push ( <div className="min-w-12 w-12 h-12 rounded-md overflow-hidden">
+    acc[user.user.email].push(
+
+      <div className="min-w-12 w-12 h-12 rounded-md overflow-hidden">
           <Image src={user.user.image!} alt="" width={100} height={100} />
-        </div>)
+      </div>
+      
+    )
         return acc
   }, {} as any);
 
 
-  // const imageElements = imageUrls?.map((url) => {
-  //   return (
-  //     <div className="w-8 h-8 rounded-full overflow-hidden">
-  //       <img src={url!} alt="" width={100} height={100} />
-  //     </div>
-  //   );
-  // });
+
 
   const messagesByDate = messages?.reduce((acc, message) => {
     const date = new Date(message.createdAt).toLocaleDateString();
@@ -73,11 +70,11 @@ const chatRoom = useChatRoomsStore
   }, [chatRoom]);
 
   return (
-    <div {...handlers} className="b h-screen col-span-9">
+    <div {...handlers} className="b h-screen col-span-12 md:col-span-9">
       <div className=" box-border  flex h-full flex-col bg-bg_2 ">
         <div className="text-white">
           <div>
-           <NavBar />
+           <NavBar setOpenSideBar={setOpenSideBar} />
          
           </div>
         </div>
@@ -100,14 +97,16 @@ const chatRoom = useChatRoomsStore
                           key={message.id}
                           message={message}
                           data={data}
+                          
                           imageElement={
                             imageElements[message.userEmail] || (
                               <div className="w-12 h-12 rounded-md overflow-hidden">
                                 <img
-                                  src={data?.user?.image!}
+                                  src={"https://lh3.googleusercontent.com/a/ACg8ocLx3LNXFOTVMSPhArWBnD6VS7tN6buuGdcT-iXlKYBNVA=s96-c"}
                                   alt=""
                                   width={100}
                                   height={100}
+                                  className="min-w-12 min-h-12 h-full object-cover rounded-md"
                                 />
                               </div>
                             )

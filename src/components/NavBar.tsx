@@ -14,8 +14,9 @@ import {
 import { Switch } from "./ui/switch";
 import { useEffect } from "react";
 
-export function NavBar() {
-  // const { index, setIndex } = useSidebarStore();
+
+export function NavBar({ setOpenSideBar}:{setOpenSideBar:Function}) {
+
   const { data } = useSession();
   const i = useChatRoomsStore((state) => state.currentChatRoomIndex);
   const chatRoom = useChatRoomsStore
@@ -37,12 +38,8 @@ export function NavBar() {
         <button
           onClick={() => {
            
-
-            // if (index !== 4) {
-            //   setIndex(4);
-            // } else {
-            //   setIndex(0);
-            // }
+             setOpenSideBar(true)
+         
           }}
         >
           <Menu />
@@ -60,26 +57,30 @@ export function NavBar() {
                       chatRoomOnUser.user.email !== data?.user?.email,
                   )[0]?.user.name
                 : chatRoom?.name
-            // useChatRoomsStore.getState().chatRooms[
-            //   useChatRoomsStore((state) => state.currentChatRoomIndex)
-            // ]?.name
+     
           }
         </span>
         <span>
             {
               <div className="text-white">
                 {
-                  online?.map( 
-                    (t, index) => (<span>{t.userName} {index === online.length-1 ? " " :","}   </span>)
+                online?.length !== 0 &&
+                  ( online?.map( 
+                    (t, index) => (<span>{t.userName} {index === online.length - 1 ? " " : ","}   </span>))
+                    
                     
                 )
                 
                 }
                 {
+                  online?.length >= 2 &&
+                  <span>{online?.length} people </span> 
+                }
+                {
                   online?.length !== 0 &&
                   <span>{online?.length > 1 ? "are" : "is"} online</span>
                 }
-                {/* <span>{ online?.length}</span> */}
+
                 </div>
                 }
         </span>
