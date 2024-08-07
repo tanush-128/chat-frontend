@@ -59,7 +59,7 @@ ENV NEXTAUTH_URL "https://chat-appfrontend.azurewebsites.net/"
 ENV NEXTAUTH_SECRET   "my_secret_2"
 ENV GOOGLE_ID   "42552123265-msoo43qqlhvchgc5hpg85iidj9a4eq4e.apps.googleusercontent.com"
 ENV GOOGLE_SECRET  "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"
-ENV SOCKET_URL "https://chat-appbackend.azurewebsites.net"
+ENV SOCKET_URL "wss://chat-backend-v1-zk3f.onrender.com"
 
 
 CMD ["server.js"]

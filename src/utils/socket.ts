@@ -3,7 +3,7 @@ import { useChatRoomsStore, useSocketStore } from "src/store";
 import { io } from "socket.io-client";
 
 export const socketHandler = () => {
-  const socket = io("http://localhost:3001");
+  const socket = io("wss://chat-backend-v1-zk3f.onrender.com");
   // const socket = io("https://chat-appbackend.azurewebsites.net");
   socket.on("connect", () => {
     console.log("connected");
